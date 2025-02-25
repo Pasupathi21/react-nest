@@ -55,7 +55,7 @@ export class UserController {
     }
   }
 
-  @Put(':id')
+  @Put('update/:id')
   async update(@Req() req: Request, @Res() res: Response, @Param('id') id: string, @Body() body: UpdateUserDto) {
     try {
         const data = await this.userService.update(id, body)
@@ -73,6 +73,10 @@ export class UserController {
   @Patch('delete/:id')
   async delete(@Req() req: Request, @Res() res: Response, @Param('id') id: string) {
     try {
+        const data = this.userService.delete(id)
+        return res.status(HttpStatus.OK).send({
+            status: true
+        })
     } catch (error) {
         return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
             error: error

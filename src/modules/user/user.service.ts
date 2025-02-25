@@ -59,11 +59,16 @@ export class UserService {
       }
     });
   }
-  async delete() {
+  async delete(id: string, payload?: UpdateUserDto) {
     return new Promise(async (resolve, reject) => {
       try {
-        const user_created = await this.prisma.user.create({
-          data: {} as any,
+        const user_created = await this.prisma.user.update({
+          where: {
+            id: id,
+          },
+          data: {
+            is_active: false,
+          },
         });
         resolve(user_created);
       } catch (error) {
